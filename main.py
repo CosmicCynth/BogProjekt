@@ -3,18 +3,26 @@ bogID = 1
 
 def start():
     brugersvar = input("Halløj med dig, vil registrere en bog eller læse en?")
-    brugersvar = brugersvar.upper()
-    if brugersvar == "REGISTRER" or "REG":
+    brugersvar = brugersvar.upper() # VI laver svaret til uppercase for mindre fejl
+    if brugersvar == "REGISTRER" or brugersvar == "REG":
+        brugersvar = ""
         registrereEnBog()
-    elif brugersvar == "LÆSE":
+    elif brugersvar == "LÆSE" or brugersvar == "LÆS":
+        brugersvar = ""
         læse()
     else:
+        brugersvar = ""
         print("FORKERT PRØV IGEN")
         start()
 
 
 def læse():
-    print("Læse")
+    for bogID, bog in bøger.items():
+        print(f"Bog ID: {bogID}")
+        for key, value in bog.items():
+            print(f"{key}: {value}")
+
+
 
 
 
