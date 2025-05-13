@@ -128,6 +128,6 @@ def Addbog(): # Vi laver test bog
     bøger[bogID]["Vudering"] = 0
     start()
 
-start()
+start() # Opstart af programmet
 
 #Note lav hver bog til en class i stedet
