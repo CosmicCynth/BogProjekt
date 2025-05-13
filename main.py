@@ -1,34 +1,24 @@
-bøger = {}
-bogID = 1
+bøger = {} # tomt dict til at beholde alt for data
+bogID = 1 #
 
 def start():
-    brugersvar = input("Halløj med dig, vil registrere en bog eller læse en? ")
-    brugersvar = brugersvar.upper() # VI laver svaret til uppercase for mindre fejl
-    if brugersvar == "REGISTRER" or brugersvar == "REG":
+    brugersvar = input("Halløj med dig, vil registrere en bog eller læse/vuder en? ").upper() # får bruger input
+    if brugersvar == "REGISTRER" or brugersvar == "REG": # Check efter bruger svar
+        brugersvar = "" # For at gøre brugersvar tom
+        registrereEnBog() # Gå til
+    elif brugersvar == "LÆSE" or brugersvar == "LÆS" or brugersvar == "VUDER": # Checker brugers svar
         brugersvar = ""
-        registrereEnBog()
-    elif brugersvar == "LÆSE" or brugersvar == "LÆS":
-        brugersvar = ""
-        læse()
-    elif brugersvar == "TEST":
-        brugersvar = ""
-        Addbog()
+        læseMuligheder() # gå til
+    elif brugersvar == "TEST": # checker igen
+        brugersvar = "" # For at gøre brugersvar tom
+        Addbog() # gå til
     else:
-        brugersvar = ""
-        print("FORKERT PRØV IGEN")
-        start()
-
-
-def læse():
-    for bogID, bog in bøger.items():
-        print(f"Bog ID: {bogID}")
-        for key, value in bog.items():
-            print(f"{key}: {value}")
-    læseMuligheder()
+        brugersvar = "" # For at gøre brugersvar tom
+        print("FORKERT PRØV IGEN") # Forkert
+        start() # Opstart på
 
 def læseMuligheder():
-    brugersvar = input("Vil du læse eller vudere en bog? ")
-    brugersvar = brugersvar.upper()
+    brugersvar = input("Vil du læse eller vudere en bog? ").upper() #
     if brugersvar == "LÆSE" or brugersvar == "LÆS":
         læsBog()
     elif brugersvar == "VUDER":
@@ -36,15 +26,32 @@ def læseMuligheder():
 
 
 def læsBog():
-    print("læse!!")
+    brugersvar = input("Hvilken bog vil du læse? ").strip().upper()
+    for bog in bøger.values():
+        if bog["Titel"].strip().upper() == brugersvar:
+            print("Bog fundet:")
+            print("Titel:", bog["Titel"])
+            print("Forfatter: ", bog["Forfatter"])
+            brugersvar = input("Vil du gerne læse den bog? ").upper()
+            if brugersvar == "JA":
+                print("Du har nu læst den...")
+                brugersvar = input("Vil du vuder bogen? ").upper()
+                bog["status"] = "læst"
+                if brugersvar == "JA":
+                    brugersvar = input("Hvilken vudering vil du give fra 1-10? ")
+                    bog["Vudering"] = brugersvar
+                    print(bog["Vudering"])
+                    start()
+            start()
+
 
 
 
 def vuderBog():
-    brugersvar = input("Hvilken bog vil du vurdere? ").strip().lower()
+    brugersvar = input("Hvilken bog vil du vurdere? ").strip().upper()
     fundet = False
     for bog in bøger.values():
-        if bog["Titel"].strip().lower() == brugersvar:
+        if bog["Titel"].strip().upper() == brugersvar:
             print("Bog fundet:")
             print("Titel:", bog["Titel"])
             print("Vurdering:", bog["Vudering"])
@@ -55,6 +62,7 @@ def vuderBog():
             start()
     if not fundet:
         print("Ingen bog med den titel blev fundet.")
+        vuderBog()
 
 
 
@@ -63,8 +71,7 @@ def vuderBog():
 def registrereEnBog():
     title = input("Hvad er navnet på bogen? ")
     title = str(title)
-    bekræftelse = input("Bekræft at du sikker med ja eller nej! Titlen er " + title + " ")
-    bekræftelse = bekræftelse.upper()
+    bekræftelse = input("Bekræft at du sikker med ja eller nej! Titlen er " + title + " ").upper()
     if bekræftelse == "JA":
         bøger[bogID] = {} # Her laver vi et nested dict!
         bøger[bogID]["Titel"] = title
@@ -76,8 +83,7 @@ def registrereEnBog():
 
 def registrereEnBogGenre():
     genre = input("Hvilken genre er bogen? ")
-    bekræftelse = input("Bekræft at du sikker med ja eller nej! Genren er " + genre + " ")
-    bekræftelse = bekræftelse.upper()
+    bekræftelse = input("Bekræft at du sikker med ja eller nej! Genren er " + genre + " ").upper()
     if bekræftelse == "JA":
         bøger[bogID]["Genre"] = genre
         registrereEnBogForfatter()
@@ -88,8 +94,7 @@ def registrereEnBogGenre():
 
 def registrereEnBogForfatter():
     forfatter = input("Hvad hedder forfatteren? ")
-    bekræftelse = input("Bekræft at du sikker med ja eller nej! Forfatteren er " + forfatter + " ")
-    bekræftelse = bekræftelse.upper()
+    bekræftelse = input("Bekræft at du sikker med ja eller nej! Forfatteren er " + forfatter + " ").upper()
     if bekræftelse == "JA":
         bøger[bogID]["Forfatter"] = forfatter
         registrereEnBogISBN()
@@ -122,7 +127,6 @@ def Addbog():
     bøger[bogID]["status"] = "ulæst"
     bøger[bogID]["Vudering"] = 0
     start()
-
 
 start()
 
