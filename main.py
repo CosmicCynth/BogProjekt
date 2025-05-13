@@ -15,33 +15,33 @@ def start():
     else:
         brugersvar = "" # For at gøre brugersvar tom
         print("FORKERT PRØV IGEN") # Forkert
-        start() # Opstart på
+        start() # Opstart igen
 
 def læseMuligheder():
-    brugersvar = input("Vil du læse eller vudere en bog? ").upper() #
-    if brugersvar == "LÆSE" or brugersvar == "LÆS":
-        læsBog()
-    elif brugersvar == "VUDER":
-        vuderBog()
+    brugersvar = input("Vil du læse eller vudere en bog? ").upper() # Spørg bruger
+    if brugersvar == "LÆSE" or brugersvar == "LÆS": # Checker svar
+        læsBog() # Gå til
+    elif brugersvar == "VUDER": #  Checker svar
+        vuderBog() # Gå til
 
 
 def læsBog():
-    brugersvar = input("Hvilken bog vil du læse? ").strip().upper()
-    for bog in bøger.values():
-        if bog["Titel"].strip().upper() == brugersvar:
-            print("Bog fundet:")
-            print("Titel:", bog["Titel"])
-            print("Forfatter: ", bog["Forfatter"])
+    brugersvar = input("Hvilken bog vil du læse? ").strip().upper() #Strip for mere klar string til at sammenligning
+    for bog in bøger.values(): # looper dict
+        if bog["Titel"].strip().upper() == brugersvar: # Check om brugersvar er det samme som i dict
+            print("Titel:", bog["Titel"]) # Printer titel af bog
+            print("Forfatter: ", bog["Forfatter"]) # Printer forfatter af bog
             brugersvar = input("Vil du gerne læse den bog? ").upper()
-            if brugersvar == "JA":
+            if brugersvar == "JA": # Checker brugersvar
                 print("Du har nu læst den...")
                 brugersvar = input("Vil du vuder bogen? ").upper()
-                bog["status"] = "læst"
-                if brugersvar == "JA":
+                bog["status"] = "læst" # bogen bliver læst inde i dictet
+                if brugersvar == "JA": # Checker om
                     brugersvar = input("Hvilken vudering vil du give fra 1-10? ")
-                    bog["Vudering"] = brugersvar
+                    bog["Vudering"] = brugersvar # opdater variable inde i dict
                     print(bog["Vudering"])
                     start()
+                start()
             start()
 
 
@@ -51,7 +51,7 @@ def vuderBog():
     brugersvar = input("Hvilken bog vil du vurdere? ").strip().upper()
     fundet = False
     for bog in bøger.values():
-        if bog["Titel"].strip().upper() == brugersvar:
+        if bog["Titel"].strip().upper() == brugersvar: # Checker om title matcher med brugers input
             print("Bog fundet:")
             print("Titel:", bog["Titel"])
             print("Vurdering:", bog["Vudering"])
@@ -74,14 +74,14 @@ def registrereEnBog():
     bekræftelse = input("Bekræft at du sikker med ja eller nej! Titlen er " + title + " ").upper()
     if bekræftelse == "JA":
         bøger[bogID] = {} # Her laver vi et nested dict!
-        bøger[bogID]["Titel"] = title
-        registrereEnBogGenre()
+        bøger[bogID]["Titel"] = title # Vi indlæser title varibalen ind i dict
+        registrereEnBogGenre() # Gå til
 
     else:
         bekræftelse = ""
         registrereEnBog()
 
-def registrereEnBogGenre():
+def registrereEnBogGenre(): # gerne indskrivning
     genre = input("Hvilken genre er bogen? ")
     bekræftelse = input("Bekræft at du sikker med ja eller nej! Genren er " + genre + " ").upper()
     if bekræftelse == "JA":
@@ -92,7 +92,7 @@ def registrereEnBogGenre():
         bekræftelse = ""
 
 
-def registrereEnBogForfatter():
+def registrereEnBogForfatter(): # her indskrives forfatter
     forfatter = input("Hvad hedder forfatteren? ")
     bekræftelse = input("Bekræft at du sikker med ja eller nej! Forfatteren er " + forfatter + " ").upper()
     if bekræftelse == "JA":
@@ -102,7 +102,7 @@ def registrereEnBogForfatter():
         registrereEnBogForfatter()
 
 
-def registrereEnBogISBN():
+def registrereEnBogISBN(): # Her laver vi ISBN nummer til bogen
     global bogID
     ISBN = input("Hvad er ISBN koden? (Den skal være 13 cifre) ")
     ISBN = str(ISBN)
@@ -118,7 +118,7 @@ def registrereEnBogISBN():
         print("FORKERT")
         registrereEnBogISBN()
 
-def Addbog():
+def Addbog(): # Vi laver test bog
     bøger[1] = {}  # Her laver vi et nested dict!
     bøger[bogID]["Titel"] = "TestTitel"
     bøger[bogID]["Genre"] = "TestGenre"
