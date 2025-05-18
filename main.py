@@ -23,6 +23,8 @@ def læseMuligheder():
         læsBog() # Gå til
     elif brugersvar == "VUDER": #  Checker svar
         vuderBog() # Gå til
+    else:
+        læseMuligheder()
 
 
 def læsBog():
@@ -43,6 +45,8 @@ def læsBog():
                     start()
                 start()
             start()
+        else:
+            læsBog()
 
 
 
